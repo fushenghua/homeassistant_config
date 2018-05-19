@@ -1,0 +1,154 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 50
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Shanghai
+  # Customization file
+  customize: !include customize.yaml
+# Show links to resources in log and frontend
+#introduction: 
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor:
+  - platform: yr
+
+# Text to speech
+tts:
+  - platform: baidu
+    app_id: !secret baidu_app_id
+    api_key: !secret baidu_api_key
+    secret_key: !secret baidu_secret_key
+    speed: 5
+    pitch: 5
+    volume: 15
+    person: 0
+
+media_player:
+      - platform: mpd
+        host: 192.168.31.163
+    
+
+# device_tracker:
+#   - platform: bluetooth_tracker
+
+# media_player:
+#   - platform: tts_bluetooth_speaker
+#     # address: 00:2F:AD:12:0D:42
+#     address: F4:4E:FD:4B:D3:78
+#     volume: 0.45      
+# panel_iframe:
+#   music:
+#     title: cloudmusic
+#     icon: mdi:music
+#     url: http://hassio.local:6680/moped/#
+
+# Cloud
+cloud:
+
+switch:
+  - platform: broadlink
+    host: 192.168.31.200
+    mac: !secret Heater_mac
+    type:  sp3
+    friendly_name: 'Heater'
+  - platform: broadlink
+    host: 192.168.31.169
+    mac: !secret BedroomFan_mac
+    type:  sp3
+    friendly_name: 'BedroomFan'
+  - platform: broadlink
+    host: 192.168.31.223
+    mac: !secret LivingRoom_mac
+    type:  sp3
+    friendly_name: 'LivingRoom'   
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+device_tracker:
+  - platform: xiaomi
+    host: 192.168.31.1 #路由器Ip
+    # username: SNAILOV(家) #管理员账号
+    password: !secret xiaomi_password #管理员密码
+    track_new_devices: yes #是否自动添加新设备
+
+
+sensor:
+  - platform: HeWeather
+    city: 深圳
+    aqi_city: 深圳
+    appkey: !secret He_appkey
+    host: 192.168.31.163
+    mac: !secret He_mac
+    options:
+      - fl
+      - tmp
+      - cond_txt
+      - wind_spd
+      - hum
+      - pcpn
+      - pres
+      - vis
+      - wind_sc
+      - aqi
+      - main
+      - qlty
+      - pm10
+      - pm25
+      - comf
+      - cw
+      - drsg
+      - flu
+      - sport
+      - trav
+      - uv
+      - wind_dir
+      - tmp_max
+      - tmp_min
+      - pop    

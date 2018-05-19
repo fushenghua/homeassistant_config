@@ -1,0 +1,96 @@
+- alias: weather_report
+  initial_state: true
+  trigger:
+  - platform: time
+    hours: 8
+    minutes: 0
+    seconds: 0
+  condition:
+    condition: numeric_state
+    entity_id: sensor.heweather_tmp
+    above: 30
+  action:
+  - service: tts.baidu_say
+    data_template:
+      entity_id: media_player.mpd
+      message: 主人，现在播报天气信息。天气{{states('sensor.heweather_cond_txt')}}，温度{{states('sensor.heweather_tmp')}}°C,{{states.sensor.heweather_drsg.attributes.attribution}}。
+  id: b0fc51ec4fe6428c8c09496108339969
+- alias: bedroomfan_on
+  trigger:
+  - entity_id: switch.bedroomfan
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: tts.baidu_say
+    data_template:
+      entity_id: media_player.mpd
+      message: 主人，卧室风扇已经打开。
+  id: 60a9a0fd17754c7c9fcedbc024a5ca8b
+- id: '1526714987220'
+  alias: bedroomfan_off
+  trigger:
+  - below: '28'
+    entity_id: sensor.heweather_tmp
+    platform: numeric_state
+  condition: []
+  action:
+  - data: {}
+    data_template:
+      entity_id: media_player.mpd
+      message: 主人，现在温度{{states('sensor.heweather_tmp')}}°C,为预防感冒，已为主人关闭风扇、空调。
+    service: tts.baidu_say
+  - data:
+      entity_id: switch.bedroomfan
+    service: switch.turn_off
+  initial_state: true
+- id: '1526714987221'
+  alias: heater_off
+  trigger:
+  - entity_id: switch.heater
+    for:
+      minutes: 7
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    data_template:
+      entity_id: media_player.mpd
+      message: 主人，热水已为您调至合适温度，快去洗澡吧~。
+    service: tts.baidu_say
+  - data:
+      entity_id: switch.heater
+    service: switch.turn_off
+  initial_state: true
+- alias: tianmao_music_play
+  initial_state: true
+  trigger:
+  - platform: time
+    hours: 8
+    minutes: 1
+    seconds: 0
+  action:
+  - service: tts.baidu_say
+    data_template:
+      entity_id: media_player.mpd
+      message: 天猫精灵，播放好听的音乐。
+  id: f563c14401d94752a27e4459dd48ed46
+- alias: tianmao_music_stop
+  initial_state: true
+  trigger:
+  - platform: time
+    hours: 8
+    minutes: 40
+    seconds: 0
+  condition:
+  - condition: state
+    entity_id: switch.livingroom
+    state: 'on'
+  action:
+  - service: tts.baidu_say
+    data_template:
+      entity_id: media_player.mpd
+      message: 天猫精灵，，，，，、、、、、退下。

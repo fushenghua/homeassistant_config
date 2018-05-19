@@ -1,0 +1,17 @@
+switch.heater:
+    homebridge_name: '热水器'
+    homebridge_hidden: false
+    friendly_name: '热水器'
+switch.bedroomfan:
+    homebridge_name: '卧室风扇'
+    homebridge_hidden: false
+    friendly_name: '卧室风扇'
+switch.livingroom:
+    homebridge_name: '客厅开关'
+    homebridge_hidden: false
+    friendly_name: '客厅开关'    
+sensor.heweather_hum:
+    homebridge_name: '室外湿度'
+    homebridge_hidden: false
+    homebridge_visible: true
+    homebridge_sensor_type: humidity

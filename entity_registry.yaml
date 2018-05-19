@@ -1,0 +1,8 @@
+sensor.iphone_battery_state:
+  name:
+  platform: ios
+  unique_id: state_fushenghuaiphone
+sensor.iphone_battery_level:
+  name: 我
+  platform: ios
+  unique_id: level_fushenghuaiphone
