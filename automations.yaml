@@ -31,7 +31,7 @@
 - id: '1526714987220'
   alias: bedroomfan_off
   trigger:
-  - below: '28'
+  - below: '22'
     entity_id: sensor.heweather_tmp
     platform: numeric_state
   condition: []
